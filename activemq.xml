@@ -120,7 +120,7 @@
             http://activemq.apache.org/configuring-transports.html 
         -->
         <transportConnectors>
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616"/>
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:80"/>
         </transportConnectors>
 
     </broker>
