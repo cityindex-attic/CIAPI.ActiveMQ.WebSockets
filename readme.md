@@ -68,7 +68,7 @@ http://localhost:8161/camel/routes
 And then invoke the start / stop for the specific route (stock-quote / news-quote)
 
 ##Client
-CS sample client - 
+###CS sample client - 
 https://github.com/cityindex/CIAPI.CS/tree/master/src/StreamingClient/Websocket
 
 Can be used as:
@@ -92,3 +92,6 @@ Can be used as:
         
         		Assert.AreEqual(3, stompMessages.Count);
         }
+
+###Javascript sample client (works in Chrome; other browsers not so much)
+See Client.Chrome.html
