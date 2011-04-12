@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="https://github.com/douglascrockford/JSON-js/raw/8e0b15cb492f63067a88ad786e4d5fc0fa89a241/json2.js"></script>
+    <script src="https://github.com/jmesnil/stomp-websocket/raw/master/src/stomp.js"></script>
+  </head>
+  <body>
+    <h1>Sample websocket client for Chrome</h1>
+    <p>Connecting to: <span id="ws_host">==insert host here==</span></p>
+    <pre id="logging_console" style="border:1px solid black">
+    </pre>
+    <script>
+      var socket, client,
+      host = "ws://ec2-50-17-7-70.compute-1.amazonaws.com",
+      login = '',
+      passcode = '',
+      destination = '/topic/mock.news';
+
+$(document).ready(function() {
+    log("Initialising websocket connection to "+host);
+    $('#ws_host').text(host);
+
+    client = Stomp.client(host);
+
+    // this allows to display debug logs directly on the web page
+    client.debug = function(str) {
+      log(str);
+    }; 
+    // the client is notified when it is connected to the server.
+    var onconnect = function(frame) {
+      debug("connected to Stomp");
+           
+      client.subscribe(destination, function(message) {
+        log(message);
+      });
+    };
+    client.connect(login, passcode, onconnect);
+
+  });
+
+function log(msg) {
+  console.log(msg);
+  var msgAsString = msg;
+  if (typeof(msg)!=='string') {
+    msgAsString = JSON.stringify(msg,null,'\t');
+  }
+  $('#logging_console').append('\n---\n' + msgAsString);
+
+};
+    </script>
+  </body>
+</head>
