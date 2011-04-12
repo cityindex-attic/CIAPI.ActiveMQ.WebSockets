@@ -23,9 +23,9 @@ $ACTIVEMQ_HOME/conf/activemq.xml
 
 Locate the <transportConnectors> element and add the following 
 
-<transportConnector name="websocket" uri="ws://0.0.0.0:61614"/>
+    <transportConnector name="websocket" uri="ws://0.0.0.0:80"/>
 
-This will expose the websocket interface on port 61614.
+This will expose the websocket interface on port 80.
 
 Copy the camel-freemarker & freemarker jars to $ACTIVEMQ_HOME/lib folder
 
@@ -68,7 +68,7 @@ http://localhost:8161/camel/routes
 And then invoke the start / stop for the specific route (stock-quote / news-quote)
 
 ##Client
-CS sample client - 
+###CS sample client - 
 https://github.com/cityindex/CIAPI.CS/tree/master/src/StreamingClient/Websocket
 
 Can be used as:
@@ -92,3 +92,6 @@ Can be used as:
         
         		Assert.AreEqual(3, stompMessages.Count);
         }
+
+###Javascript sample client (works in Chrome; other browsers not so much)
+See Client.Chrome.html
