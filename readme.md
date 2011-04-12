@@ -4,14 +4,13 @@
 
 ##EC2 instance:
 (Ubuntu + ActiveMQ running STOMP over Websockets & publishing mock News & Price streams)
-AMI: ami-3e02f257
-WS: ws://ec2-50-17-7-70.compute-1.amazonaws.com
-ActiveMQ console: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin
-Mock topics: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin/topics.jsp
-*  mock.news
-*  mock.stock
-
-SSH: ec2-50-17-7-70.compute-1.amazonaws.com - contact david.laing@cityindex.com with your a username & your SSH public key to get a login.
+    AMI: ami-3e02f257
+    WS: ws://ec2-50-17-7-70.compute-1.amazonaws.com
+    ActiveMQ console: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin
+    Mock topics: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin/topics.jsp
+    *  mock.news
+    *  mock.stock
+    SSH: ec2-50-17-7-70.compute-1.amazonaws.com - contact david.laing@cityindex.com with your a username & your SSH public key to get a login.
 
 ###Local install:
 download and unzip activemq to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
@@ -72,22 +71,22 @@ CS sample client -
 https://github.com/cityindex/CIAPI.CS/tree/master/src/StreamingClient/Websocket
 
 Can be used as:
-        [Test, Category("DependsOnExternalResource")]
-        public void CanConnectToExternal()
-        {
-        		_logger.InfoFormat("Ready to subscribe");
-        		var stompMessages = new List<StompMessage>();
-        		using (var stomp = new StompOverWebsocketConnection(
-        			new Uri("ws://==ActiveMQUrl==:80")))
-        		{
-        			stomp.Connect("", ""); 
-        			stomp.Subscribe("/topic/mock.news");
-        			for (var i = 0; i < 3; i++)
-        			{
-        				stompMessages.Add(stomp.WaitForMessage());
-        			}
-        			stomp.Unsubscribe("/topic/mock.news");
-        		}
-        
-        		Assert.AreEqual(3, stompMessages.Count);
-        }
+    [Test, Category("DependsOnExternalResource")]
+    public void CanConnectToExternal()
+    {
+    		_logger.InfoFormat("Ready to subscribe");
+    		var stompMessages = new List<StompMessage>();
+    		using (var stomp = new StompOverWebsocketConnection(
+    			new Uri("ws://==ActiveMQUrl==:80")))
+    		{
+    			stomp.Connect("", ""); 
+    			stomp.Subscribe("/topic/mock.news");
+    			for (var i = 0; i < 3; i++)
+    			{
+    				stompMessages.Add(stomp.WaitForMessage());
+    			}
+    			stomp.Unsubscribe("/topic/mock.news");
+    		}
+    
+    		Assert.AreEqual(3, stompMessages.Count);
+    }
