@@ -94,4 +94,32 @@ Can be used as:
         }
 
 ###Javascript sample client (works in Chrome; other browsers not so much)
-See Client.Chrome.html
+See Client.Chrome.html for full sample
+
+    var socket, client, 
+    host = "ws://ec2-50-17-7-70.compute-1.amazonaws.com", 
+    login = '', 
+    passcode = '', 
+    destination = '/topic/mock.news';
+    
+    $(document).ready(function() {
+    	log("Initialising websocket connection to " + host);
+    	$('#ws_host').text(host);
+    
+    	client = Stomp.client(host);
+    
+    	// this allows to display debug logs directly on the web page
+    	client.debug = function(str) {
+    		log(str);
+    	};
+    	// the client is notified when it is connected to the server.
+    	var onconnect = function(frame) {
+    		debug("connected to Stomp");
+    
+    		client.subscribe(destination, function(message) {
+    			log(message);
+    		});
+    	};
+    	client.connect(login, passcode, onconnect);
+    
+    });
