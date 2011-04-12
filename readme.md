@@ -72,22 +72,22 @@ CS sample client -
 https://github.com/cityindex/CIAPI.CS/tree/master/src/StreamingClient/Websocket
 
 Can be used as:
-    [Test, Category("DependsOnExternalResource")]
-    public void CanConnectToExternal()
-    {
-    		_logger.InfoFormat("Ready to subscribe");
-    		var stompMessages = new List<StompMessage>();
-    		using (var stomp = new StompOverWebsocketConnection(
-    			new Uri("ws://==ActiveMQUrl==:80")))
-    		{
-    			stomp.Connect("", "");
-    			stomp.Subscribe("/topic/mock.news");
-    			for (var i = 0; i < 3; i++)
-    			{
-    				stompMessages.Add(stomp.WaitForMessage());
-    			}
-    			stomp.Unsubscribe("/topic/mock.news");
-    		}
-    
-    		Assert.AreEqual(3, stompMessages.Count);
-    }
+        [Test, Category("DependsOnExternalResource")]
+        public void CanConnectToExternal()
+        {
+        		_logger.InfoFormat("Ready to subscribe");
+        		var stompMessages = new List<StompMessage>();
+        		using (var stomp = new StompOverWebsocketConnection(
+        			new Uri("ws://==ActiveMQUrl==:80")))
+        		{
+        			stomp.Connect("", ""); 
+        			stomp.Subscribe("/topic/mock.news");
+        			for (var i = 0; i < 3; i++)
+        			{
+        				stompMessages.Add(stomp.WaitForMessage());
+        			}
+        			stomp.Unsubscribe("/topic/mock.news");
+        		}
+        
+        		Assert.AreEqual(3, stompMessages.Count);
+        }
