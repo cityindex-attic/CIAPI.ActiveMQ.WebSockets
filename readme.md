@@ -23,7 +23,7 @@ $ACTIVEMQ_HOME/conf/activemq.xml
 
 Locate the <transportConnectors> element and add the following 
 
-<transportConnector name="websocket" uri="ws://0.0.0.0:61614"/>
+    <transportConnector name="websocket" uri="ws://0.0.0.0:61614"/>
 
 This will expose the websocket interface on port 61614.
 
