@@ -51,6 +51,8 @@ The final version of activemq.xml & camel.xml are also included along with this 
 
 $ACTIVEMQ_HOME/bin/activemq start
 
+If having trouble starting activemq; try $ACTIVEMQ_HOME/bin/activemq console for more detail
+
 To start / stop the routes (to enable / disable triggering background publishing) go the camel page
 http://localhost:8161/camel/routes
 
