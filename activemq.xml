@@ -120,7 +120,8 @@
             http://activemq.apache.org/configuring-transports.html 
         -->
         <transportConnectors>
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:80"/>
+          <transportConnector name="openwire" uri="tcp://0.0.0.0:61616"/>
+          <transportConnector name="websocket" uri="ws://0.0.0.0:8181"/>
         </transportConnectors>
 
     </broker>
@@ -135,3 +136,4 @@
     
 </beans>
 <!-- END SNIPPET: example -->
+

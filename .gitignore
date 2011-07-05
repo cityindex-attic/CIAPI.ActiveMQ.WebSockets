@@ -1,4 +1,6 @@
-
+#Ignore downloaded copies of activeMq
+apache-activemq*/
+activemq/
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio

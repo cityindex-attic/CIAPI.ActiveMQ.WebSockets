@@ -50,17 +50,17 @@
             <to uri="activemq:example.B"/>
         </route>
 
-	<route id="stock-quote">
-		<from uri="timer:stock-trigger?period=1000"/>
-		<to uri="freemarker:templates/stock-quote.json"/>
-		<to uri="activemq:topic:stock-quote"/>	
-	</route>
+        <route id="stock-quote">
+              <from uri="timer:stock-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.price.json"/>
+              <to uri="activemq:topic:mock.price"/>  
+          </route>
 
-	<route id="news-quote">
-		<from uri="timer:news-trigger?period=1000"/>
-		<to uri="freemarker:templates/news-quote.json"/>
-		<to uri="activemq:topic:news-quote"/>	
-	</route>
+          <route id="news-quote">
+              <from uri="timer:news-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.news.json"/>
+              <to uri="activemq:topic:mock.news"/>   
+          </route>
 
     </camelContext>
 

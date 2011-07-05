@@ -11,10 +11,10 @@
     </pre>
     <script>
       var socket, client,
-      host = "ws://ec2-50-17-7-70.compute-1.amazonaws.com",
+      host = "ws://localhost:8181/",
       login = '',
       passcode = '',
-      destination = '/topic/mock.news';
+      destination = '/topic/mock.price';
 
 $(document).ready(function() {
     log("Initialising websocket connection to "+host);
