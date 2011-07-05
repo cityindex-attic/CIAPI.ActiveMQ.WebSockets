@@ -2,19 +2,8 @@
 
 ##Server
 
-##EC2 instance:
-(Ubuntu + ActiveMQ running STOMP over Websockets & publishing mock News & Price streams)
-
-        AMI: ami-3e02f257
-        WS: ws://ec2-50-17-7-70.compute-1.amazonaws.com
-        ActiveMQ console: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin
-        Mock topics: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin/topics.jsp
-        *  mock.news
-        *  mock.stock
-        SSH: ec2-50-17-7-70.compute-1.amazonaws.com - contact david.laing@cityindex.com with your a username & your SSH public key to get a login.
-
 ###Local install:
-download and unzip activemq to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
+download and unzip activemq 5.4.2 to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
 
 ####Enable websocket connector
 
