@@ -10,7 +10,7 @@ download and unzip activemq 5.4.2 to a folder (we will assume that be for ACTIVE
 Open the file
 $ACTIVEMQ_HOME/conf/activemq.xml
 
-Locate the <transportConnectors> element and add the following 
+Locate the transportConnectors element and add the following 
 
     <transportConnector name="websocket" uri="ws://0.0.0.0:80"/>
 
