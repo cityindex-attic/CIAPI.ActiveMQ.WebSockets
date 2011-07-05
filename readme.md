@@ -30,24 +30,22 @@ $ACTIVEMQ_HOME/conf/camel.xml
 
 Add the following inside the camelContext element
 
-    <route id="stock-quote">
-    	<from uri="timer:stock-trigger?period=1000"/>
-    	<to uri="freemarker:templates/stock-quote.json"/>
-    	<to uri="activemq:topic:stock-quote"/>	
-    </route>
-    
-    <route id="news-quote">
-    	<from uri="timer:news-trigger?period=1000"/>
-    	<to uri="freemarker:templates/news-quote.json"/>
-    	<to uri="activemq:topic:news-quote"/>	
-    </route>
+          <route id="stock-quote">
+              <from uri="timer:stock-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.price.json"/>
+              <to uri="activemq:topic:mock.price"/>  
+          </route>
 
+          <route id="news-quote">
+              <from uri="timer:news-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.news.json"/>
+              <to uri="activemq:topic:mock.news"/>   
+          </route>
 
 The above routes  setup a timer that fires every second which then invokes the freemarker component to load 
 and process a template. The output of it is sent to the specified topic.
 
-
-The final version of activemq.xml & camel.xml are also included along with this documentation.
+Sample versions of activemq.xml & camel.xml are also included along with this documentation.
 
 ####Start activemq
 
@@ -72,7 +70,7 @@ Can be used as:
         		_logger.InfoFormat("Ready to subscribe");
         		var stompMessages = new List<StompMessage>();
         		using (var stomp = new StompOverWebsocketConnection(
-        			new Uri("ws://==ActiveMQUrl==:80")))
+        			new Uri("ws://==ActiveMQUrl==:8181")))
         		{
         			stomp.Connect("", ""); 
         			stomp.Subscribe("/topic/mock.news");
@@ -90,7 +88,7 @@ Can be used as:
 See Client.Chrome.html for full sample
 
     var socket, client, 
-    host = "ws://ec2-50-17-7-70.compute-1.amazonaws.com", 
+    host = "ws://localhost:81/", 
     login = '', 
     passcode = '', 
     destination = '/topic/mock.news';
