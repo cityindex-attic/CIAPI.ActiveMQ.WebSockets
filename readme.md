@@ -2,30 +2,21 @@
 
 ##Server
 
-##EC2 instance:
-(Ubuntu + ActiveMQ running STOMP over Websockets & publishing mock News & Price streams)
-
-        AMI: ami-3e02f257
-        WS: ws://ec2-50-17-7-70.compute-1.amazonaws.com
-        ActiveMQ console: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin
-        Mock topics: http://ec2-50-17-7-70.compute-1.amazonaws.com:8161/admin/topics.jsp
-        *  mock.news
-        *  mock.stock
-        SSH: ec2-50-17-7-70.compute-1.amazonaws.com - contact david.laing@cityindex.com with your a username & your SSH public key to get a login.
-
 ###Local install:
-download and unzip activemq to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
+download and unzip [[ActiveMQ 5.4.2]](http://activemq.apache.org/activemq-542-release.html) to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
 
 ####Enable websocket connector
 
 Open the file
 $ACTIVEMQ_HOME/conf/activemq.xml
 
-Locate the <transportConnectors> element and add the following 
+Locate the transportConnectors element and add the following 
 
-    <transportConnector name="websocket" uri="ws://0.0.0.0:80"/>
+    <transportConnector name="websocket" uri="ws://0.0.0.0:8181"/>
 
-This will expose the websocket interface on port 80.
+This will expose the websocket interface on port 8181.
+
+NB: Change to another port if 8181 is already used on your system.
 
 Copy the camel-freemarker & freemarker jars to $ACTIVEMQ_HOME/lib folder
 
@@ -39,28 +30,28 @@ $ACTIVEMQ_HOME/conf/camel.xml
 
 Add the following inside the camelContext element
 
-    <route id="stock-quote">
-    	<from uri="timer:stock-trigger?period=1000"/>
-    	<to uri="freemarker:templates/stock-quote.json"/>
-    	<to uri="activemq:topic:stock-quote"/>	
-    </route>
-    
-    <route id="news-quote">
-    	<from uri="timer:news-trigger?period=1000"/>
-    	<to uri="freemarker:templates/news-quote.json"/>
-    	<to uri="activemq:topic:news-quote"/>	
-    </route>
+          <route id="stock-quote">
+              <from uri="timer:stock-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.price.json"/>
+              <to uri="activemq:topic:mock.price"/>  
+          </route>
 
+          <route id="news-quote">
+              <from uri="timer:news-trigger?period=1000"/>
+              <to uri="freemarker:templates/mock.news.json"/>
+              <to uri="activemq:topic:mock.news"/>   
+          </route>
 
 The above routes  setup a timer that fires every second which then invokes the freemarker component to load 
 and process a template. The output of it is sent to the specified topic.
 
-
-The final version of activemq.xml & camel.xml are also included along with this documentation.
+Sample versions of activemq.xml & camel.xml are also included along with this documentation.
 
 ####Start activemq
 
 $ACTIVEMQ_HOME/bin/activemq start
+
+If having trouble starting activemq; try $ACTIVEMQ_HOME/bin/activemq console for more detail
 
 To start / stop the routes (to enable / disable triggering background publishing) go the camel page
 http://localhost:8161/camel/routes
@@ -79,7 +70,7 @@ Can be used as:
         		_logger.InfoFormat("Ready to subscribe");
         		var stompMessages = new List<StompMessage>();
         		using (var stomp = new StompOverWebsocketConnection(
-        			new Uri("ws://==ActiveMQUrl==:80")))
+        			new Uri("ws://==ActiveMQUrl==:8181")))
         		{
         			stomp.Connect("", ""); 
         			stomp.Subscribe("/topic/mock.news");
@@ -94,4 +85,32 @@ Can be used as:
         }
 
 ###Javascript sample client (works in Chrome; other browsers not so much)
-See Client.Chrome.html
+See Client.Chrome.html for full sample
+
+    var socket, client, 
+    host = "ws://localhost:81/", 
+    login = '', 
+    passcode = '', 
+    destination = '/topic/mock.news';
+    
+    $(document).ready(function() {
+    	log("Initialising websocket connection to " + host);
+    	$('#ws_host').text(host);
+    
+    	client = Stomp.client(host);
+    
+    	// this allows to display debug logs directly on the web page
+    	client.debug = function(str) {
+    		log(str);
+    	};
+    	// the client is notified when it is connected to the server.
+    	var onconnect = function(frame) {
+    		debug("connected to Stomp");
+    
+    		client.subscribe(destination, function(message) {
+    			log(message);
+    		});
+    	};
+    	client.connect(login, passcode, onconnect);
+    
+    });
