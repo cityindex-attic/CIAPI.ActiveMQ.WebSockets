@@ -3,7 +3,7 @@
 ##Server
 
 ###Local install:
-download and unzip activemq 5.4.2 to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
+download and unzip [[ActiveMQ 5.4.2]](http://activemq.apache.org/activemq-542-release.html) to a folder (we will assume that be for ACTIVEMQ_HOME for the rest of the documentation)
 
 ####Enable websocket connector
 
@@ -12,9 +12,11 @@ $ACTIVEMQ_HOME/conf/activemq.xml
 
 Locate the transportConnectors element and add the following 
 
-    <transportConnector name="websocket" uri="ws://0.0.0.0:80"/>
+    <transportConnector name="websocket" uri="ws://0.0.0.0:8181"/>
 
-This will expose the websocket interface on port 80.
+This will expose the websocket interface on port 8181.
+
+NB: Change to another port if 8181 is already used on your system.
 
 Copy the camel-freemarker & freemarker jars to $ACTIVEMQ_HOME/lib folder
 
